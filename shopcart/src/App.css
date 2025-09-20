@@ -1,18 +1,16 @@
+/* CRA defaults (safe to keep) */
 .App {
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,16 +21,81 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ---------- Minimal styles to match the PDF ---------- */
+
+/* Top bar look (we also set color inline in Navbar) */
+.navbar {
+  background: #00cfe8; /* cyan */
+}
+.navbar .navbar-brand,
+.navbar a {
+  color: #fff !important;
+}
+
+/* Vertical list with light dividers like the screenshot */
+.list-group .list-group-item {
+  border-color: #e9ecef;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+/* Compact, square-ish control buttons */
+.list-group .btn {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.list-group .btn.btn-light.border {
+  background-color: #f1f3f5; /* soft gray for − and reset */
+  border-color: #ced4da;
+}
+
+/* Quantity label look */
+.list-group small.text-muted {
+  font-size: 0.85rem;
+}
+
+/* Quantity number box */
+.list-group .bg-light.border.rounded {
+  min-width: 36px;
+  text-align: center;
+}
+
+/* Modal image and rating text */
+.modal-body img {
+  max-height: 260px;          /* keep image nicely contained */
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+/* Make the modal rating look small and muted like the sample */
+.rating-small {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+/* Small white circle with cyan R, like the screenshot */
+.brand-R {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  color: #00cfe8;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1;
 }
