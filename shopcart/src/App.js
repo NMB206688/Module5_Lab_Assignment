@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -11,8 +11,26 @@ import SignIn from "./pages/signin";
 import Checkout from "./pages/checkout";
 import initialProducts from "./data/products";
 
+const STORAGE_KEY = "cart.qty";
+
 export default function App() {
-  const [products, setProducts] = useState(initialProducts);
+  // initialize from localStorage (merge saved qty onto product list)
+  const [products, setProducts] = useState(() => {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); // { [id]: qty }
+    return initialProducts.map((p) => ({
+      ...p,
+      value: Number.isFinite(saved[p.id]) ? saved[p.id] : p.value || 0,
+    }));
+  });
+
+  // persist whenever quantities change
+  useEffect(() => {
+    const map = products.reduce((acc, p) => {
+      acc[p.id] = p.value || 0;
+      return acc;
+    }, {});
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+  }, [products]);
 
   // total items for the navbar badge
   const totalQty = useMemo(
@@ -41,6 +59,11 @@ export default function App() {
     );
   };
 
+  // Reset all quantities to 0
+  const handleResetAll = () => {
+    setProducts((prev) => prev.map((p) => ({ ...p, value: 0 })));
+  };
+
   return (
     <BrowserRouter>
       <Navbar siteName="Shop 2 React" totalQty={totalQty} />
@@ -55,6 +78,7 @@ export default function App() {
               onAdd={handleAdd}
               onSub={handleSub}
               onReset={handleReset}
+              onResetAll={handleResetAll}
             />
           }
         />
